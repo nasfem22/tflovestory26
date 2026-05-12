@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Timi & Femi | Tflovestory26 </title>
+  <title>Timi & Femi | The Royal Owambe</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%232E060F' /%3E%3Ctext x='50' y='67' font-family='serif' font-size='50' font-weight='bold' fill='%23D4AF37' text-anchor='middle'%3ETF%3C/text%3E%3C/svg%3E" />
   
-   <!-- Preloads -->
-  <link rel="preload" href="style.css?v=7" as="style">
+   <!-- Preloads & Preconnects -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="style.css?v=9" as="style">
   <link rel="preload" href="hero.webp" as="image" fetchpriority="high">
   <link rel="preload" href="highlight.webp" as="image">
   <link rel="preload" href="gallery1.webp" as="image">
@@ -19,10 +21,16 @@
     :root { --wine-dark: #1C050A; --gold: #D4AF37; --gold-light: #F7E7CE; --font-serif: 'Cormorant Garamond', serif; }
     body { margin: 0; background: var(--wine-dark); overflow: hidden; height: 100vh; }
     .curtain-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10000; display: flex; justify-content: center; align-items: center; background: var(--wine-dark); }
-    .curtain-panel { position: absolute; top: 0; width: 50vw; height: 100vh; background: #2E060F; transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1); pointer-events: auto; }
+    .curtain-panel { position: absolute; top: 0; width: 50vw; height: 100vh; background: linear-gradient(90deg, #4A0411 0%, #2E060F 40%, #1C050A 80%, #4A0411 100%); transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1); pointer-events: auto; }
     .curtain-left { left: 0; } .curtain-right { right: 0; }
     .curtain-trigger { position: absolute; z-index: 10001; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 220px; height: 220px; border-radius: 50%; border: 2px solid var(--gold); background: rgba(0,0,0,0.3); }
-    .curtain-text { font-family: var(--font-serif); color: var(--gold-light); text-align: center; font-size: 1.1rem; letter-spacing: 0.1em; }
+    .curtain-ring { position: absolute; width: 100%; height: 100%; border: 2px solid rgba(212, 175, 55, 0.5); border-radius: 50%; }
+    .curtain-text { font-family: var(--font-serif); color: var(--gold-light); text-align: center; font-size: 1.1rem; letter-spacing: 0.1em; z-index: 2; }
+    
+    /* Critical Hero Styles (Locked for CLS) */
+    .hero-premium { position: relative; width: 100%; height: 100vh; overflow: hidden; background: var(--wine-dark); }
+    .hero-image-container { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; }
+    .hero-image { width: 100%; height: 100%; object-fit: cover; display: block; }
   </style>
 
   <!-- Premium Fonts -->
@@ -44,8 +52,8 @@
    <!-- Confetti Engine -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
 
-  <link rel="stylesheet" href="style.css?v=7" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="style.css?v=7"></noscript>
+  <link rel="stylesheet" href="style.css?v=9" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="style.css?v=9"></noscript>
 </head>
 <body>
   <!-- Background Audio -->
@@ -74,13 +82,13 @@
     
     <!-- Hero Section -->
     <section class="hero-premium">
-      <div class="hero-image-container">
+      <div class="hero-image-container loading-shimmer">
         <!-- Main Hero Image -->
-        <img src="hero.webp" alt="Timi and Femi" class="hero-image" fetchpriority="high" loading="eager" decoding="sync" width="1200" height="800" />
+        <img src="hero.webp" alt="Timi and Femi" class="hero-image" id="heroImage" fetchpriority="high" loading="eager" decoding="sync" width="1200" height="800" />
         <div class="hero-overlay-gradient"></div>
       </div>
       
-      <div class="hero-text-content">
+      <div class="hero-text-content" id="heroText" style="transition: opacity 1.5s ease;">
         <h3 class="hero-pre-title">You are invited to the union of</h3>
         <div class="names-wrapper">
           <h1 class="hero-name">Timi</h1>
@@ -97,8 +105,8 @@
 
     <!-- Main Highlight Picture -->
     <section class="couples-highlight">
-      <div class="highlight-image-wrapper">
-        <img src="highlight.webp" alt="Timi and Femi Highlights" class="highlight-image" loading="eager" decoding="sync" width="1400" height="933" />
+      <div class="highlight-image-wrapper" style="aspect-ratio: 1400/933; background: #1C050A;">
+        <img src="highlight.webp" alt="Timi and Femi Highlights" class="highlight-image" loading="eager" decoding="sync" width="1400" height="933" style="width: 100%; height: auto;" />
       </div>
     </section>
 
@@ -133,11 +141,11 @@
       </div>
       
       <div class="arch-gallery-grid">
-        <div class="arch-frame arch-1">
-          <img src="gallery1.webp" alt="Gallery 1" loading="eager" decoding="sync" width="800" height="1200" />
+        <div class="arch-frame arch-1" style="aspect-ratio: 800/1200; background: #1C050A;">
+          <img src="gallery1.webp" alt="Gallery 1" loading="eager" decoding="sync" width="800" height="1200" style="width: 100%; height: auto;" />
         </div>
-        <div class="arch-frame arch-2">
-          <img src="gallery2.webp" alt="Gallery 2" loading="eager" decoding="sync" width="800" height="1200" />
+        <div class="arch-frame arch-2" style="aspect-ratio: 800/1200; background: #1C050A;">
+          <img src="gallery2.webp" alt="Gallery 2" loading="eager" decoding="sync" width="800" height="1200" style="width: 100%; height: auto;" />
         </div>
       </div>
     </section>
@@ -193,8 +201,8 @@
 
     <!-- Final Photo & QR Code Section -->
     <section class="finale-section">
-      <div class="finale-image-wrapper">
-        <img src="bw.webp" alt="Couple Finale" class="finale-image" loading="eager" decoding="sync" width="1000" height="1500" />
+      <div class="finale-image-wrapper" style="aspect-ratio: 1000/1500; background: #1C050A;">
+        <img src="bw.webp" alt="Couple Finale" class="finale-image" loading="eager" decoding="sync" width="1000" height="1500" style="width: 100%; height: auto;" />
       </div>
       
       <div class="qr-code-box">
@@ -215,6 +223,17 @@
       // Initialize what we can immediately
       bindCurtains();
       initScratchCard();
+
+      // Fade in hero text only after image loads
+      const heroImg = document.getElementById('heroImage');
+      const heroText = document.getElementById('heroText');
+      if (heroImg.complete) {
+        heroText.style.opacity = '1';
+      } else {
+        heroImg.addEventListener('load', () => {
+          heroText.style.opacity = '1';
+        });
+      }
 
       // Only run icons if Lucide is ready (it's deferred)
       const checkLucide = setInterval(() => {
