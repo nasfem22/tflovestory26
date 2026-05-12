@@ -6,10 +6,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const curtainTrigger = document.getElementById('curtainTrigger');
     const curtainText = document.getElementById('curtainText');
     let isPlaying = false;
+    let wasPlayingBeforeHidden = false;
 
-    // 2. The "First Look" Guard (1MB Cap for <2s Wait)
-    // We only wait for the Hero and the Main Highlight. 
-    // This ensures the first 2 sections are perfect instantly.
+    // 2. Smart Audio Control (Pause on Tab Switch)
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            if (isPlaying) {
+                bgMusic.pause();
+                wasPlayingBeforeHidden = true;
+            }
+        } else {
+            if (wasPlayingBeforeHidden) {
+                bgMusic.play();
+                wasPlayingBeforeHidden = false;
+            }
+        }
+    });
+
+    // 3. The "First Look" Guard (1MB Cap for <2s Wait)
     const criticalImages = ['hero.webp', 'highlight.webp'];
     let loadedCount = 0;
     let isReady = false;
@@ -22,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(curtainTrigger) {
                 curtainTrigger.style.opacity = '1';
                 curtainTrigger.style.pointerEvents = 'auto';
-                curtainText.innerHTML = 'View Timi & Femi';
+                curtainText.innerHTML = 'Unveil the Love Story';
                 curtainTrigger.classList.add('ready-glow');
             }
         }
@@ -35,21 +49,21 @@ document.addEventListener('DOMContentLoaded', () => {
         else { img.onload = checkReady; img.onerror = checkReady; }
     });
 
-    // 3. Curtain Logic (Instant Reveal)
+    // 4. Curtain Logic (Instant Reveal & Audio)
     if(curtainTrigger) {
         curtainTrigger.addEventListener('click', () => {
             document.body.classList.add('opened');
             if(bgMusic) {
-                bgMusic.volume = 0.4;
-                setTimeout(() => {
-                    bgMusic.play().then(() => { isPlaying = true; }).catch(e => console.log('Audio blocked', e));
-                }, 3000); 
+                bgMusic.volume = 0.5;
+                bgMusic.play().then(() => { 
+                    isPlaying = true; 
+                }).catch(e => console.log('Audio blocked', e));
             }
             setTimeout(() => { document.body.style.overflowY = 'auto'; }, 1000);
         });
     }
 
-    // 4. Audio Control
+    // 5. Audio Toggle Button
     if(audioToggle && bgMusic) {
         audioToggle.addEventListener('click', () => {
             if(isPlaying) {
@@ -64,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 5. RSVP Logic
+    // 6. RSVP Logic
     const rsvpForm = document.getElementById('rsvpForm');
     const GOOGLE_SCRIPT_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz1lY8ymC4ggdw2Qdrk49FUlOfKJXDHlW7h4I2xyJLV7OgM0dkcT2FW7FtUAvBRGCT5/exec";
 
@@ -92,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 6. Scratch Cards
+    // 7. Scratch Cards
     const canvases = document.querySelectorAll('.scratchCanvas');
     canvases.forEach(canvas => {
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
@@ -123,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('touchend', () => isDrawing = false);
     });
 
-    // 7. Animations & Smooth Scroll
+    // 8. Animations & Smooth Scroll
     if(window.gsap) {
         gsap.registerPlugin(ScrollTrigger);
         gsap.utils.toArray('.highlight-image-wrapper, .arch-frame, .details-card-elegant, .finale-image-wrapper, .qr-code-box').forEach((item) => {
@@ -138,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.ticker.lagSmoothing(0);
     }
 
-    // 8. Lucide Icons
+    // 9. Lucide Icons
     const checkLucide = setInterval(() => {
         if (window.lucide) { lucide.createIcons(); clearInterval(checkLucide); }
     }, 100);
