@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timi & Femi | The Royal Owambe</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%232E060F' /%3E%3Ctext x='50' y='67' font-family='serif' font-size='50' font-weight='bold' fill='%23D4AF37' text-anchor='middle'%3ETF%3C/text%3E%3C/svg%3E" />
+  
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  
+  <!-- GSAP & Lenis -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+  
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- EmailJS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <link rel="stylesheet" href="style.css?v=3" />
+</head>
+<body>
+  <!-- Background Audio -->
+  <audio id="bgMusic" loop>
+    <source src="wedding.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Audio Toggle Button -->
+  <button id="audioToggle" class="audio-toggle-btn">
+    <i data-lucide="volume-2"></i>
+  </button>
+
+  <!-- Velvet Curtain Intro -->
+  <div id="curtainOverlay" class="curtain-overlay">
+    <div class="curtain-panel curtain-left"></div>
+    <div class="curtain-panel curtain-right"></div>
+    <div class="curtain-trigger" id="curtainTrigger" style="width: 250px; height: 250px;">
+      <span class="curtain-text" style="font-size: 1rem; line-height: 1.5;">View<br/>#TFLoveStory26</span>
+      <div class="curtain-ring"></div>
+    </div>
+  </div>
+
+
+
+  <div class="main-content">
+    
+    <!-- Hero Section -->
+    <section class="hero-premium">
+      <div class="hero-image-container">
+        <!-- Main Hero Image -->
+        <img src="hero.webp" alt="Timi and Femi" class="hero-image" />
+        <div class="hero-overlay-gradient"></div>
+      </div>
+      
+      <div class="hero-text-content">
+        <h3 class="hero-pre-title">You are invited to the union of</h3>
+        <div class="names-wrapper">
+          <h1 class="hero-name">Timi</h1>
+          <span class="hero-ampersand">&amp;</span>
+          <h1 class="hero-name">Femi</h1>
+        </div>
+      </div>
+      
+      <div class="scroll-indicator">
+        <span>Enter</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- Main Highlight Picture -->
+    <section class="couples-highlight">
+      <div class="highlight-image-wrapper">
+        <img src="highlight.jpg" alt="Timi and Femi Highlights" class="highlight-image" />
+      </div>
+    </section>
+
+    <!-- Scratch Off Section -->
+    <section class="reveal-section">
+      <div class="reveal-content-box">
+        <h2 class="script-title animated-save-title" style="color: var(--gold);">Save the Date</h2>
+        <p class="reveal-instruction">Scratch the gold to unveil our special day</p>
+        
+        <div class="scratch-coins-container">
+          <div class="scratch-coin-wrapper">
+            <div class="scratch-text">17</div>
+            <canvas class="scratchCanvas"></canvas>
+          </div>
+          <div class="scratch-coin-wrapper">
+            <div class="scratch-text">07</div>
+            <canvas class="scratchCanvas"></canvas>
+          </div>
+          <div class="scratch-coin-wrapper">
+            <div class="scratch-text">26</div>
+            <canvas class="scratchCanvas"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Elegant Archway Gallery -->
+    <section class="gallery-section">
+      <div class="section-header-centered">
+        <h2 class="script-title">Captured</h2>
+        <h3 class="serif-subtitle">Moments Frozen in Time</h3>
+      </div>
+      
+      <div class="arch-gallery-grid">
+        <div class="arch-frame arch-1">
+          <img src="gallery1.webp" alt="Gallery 1" />
+        </div>
+        <div class="arch-frame arch-2">
+          <img src="gallery2.webp" alt="Gallery 2" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Details -->
+    <section class="details-section">
+      <a href="https://maps.google.com/?q=Geeks+Event+Place+Behind+Fresh+FM+Ayefele+Music+House+Challenge+Ibadan" target="_blank" class="details-card-elegant venue-link">
+        <i data-lucide="map-pin" class="details-icon"></i>
+        <h3 class="details-title">The Venue</h3>
+        <p class="details-desc">Geeks Event Place<br/><span style="font-size: 1rem;">Behind Fresh FM (Ayefele Music House)<br/>Challenge, Ibadan</span></p>
+        <span class="click-hint">Click for Maps</span>
+      </a>
+      <div class="details-card-elegant">
+        <i data-lucide="clock" class="details-icon animate-tick-tock"></i>
+        <h3 class="details-title">The Time</h3>
+        <p class="details-desc">Starts at 10:00 AM<br/><span style="color: var(--gold); font-weight: bold;">No African Time.</span></p>
+      </div>
+      <div class="details-card-elegant dress-code-card">
+        <i data-lucide="sparkles" class="details-icon animate-pulse"></i>
+        <h3 class="details-title">Dress Code</h3>
+        <p class="details-desc" style="font-weight: bold; letter-spacing: 0.1em; color: var(--gold-light);">WHITE</p>
+      </div>
+    </section>
+
+    <!-- RSVP Section -->
+    <section class="rsvp-premium-section">
+      <div class="rsvp-glass-box">
+        <h2 class="script-title">RSVP</h2>
+        <h3 class="serif-subtitle" style="margin-bottom: 40px;">Claim Your VIP Pass</h3>
+        
+        <form id="rsvpForm" class="rsvp-form">
+          <div class="input-group">
+            <input type="text" id="name" name="name" required placeholder="Guest Full Name" />
+          </div>
+          <div class="input-group">
+            <input type="tel" id="phone" name="phone" required placeholder="Phone Number" />
+          </div>
+          <div class="input-group">
+            <input type="text" id="location" name="location" required placeholder="City / Country" />
+          </div>
+          <button type="submit" class="btn-gold-solid">
+            <span class="btn-text">I Wouldn't Miss It!</span>
+          </button>
+        </form>
+        <div id="rsvpMessage" class="rsvp-successMessage" style="display: none;">
+          <h3 class="script-title">Thank You</h3>
+          <p style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--gold-light);">Your presence is highly anticipated.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final Photo & QR Code Section -->
+    <section class="finale-section">
+      <div class="finale-image-wrapper">
+        <img src="bw.jpg" alt="Couple Finale" class="finale-image" />
+      </div>
+      
+      <div class="qr-code-box">
+        <h2 class="serif-subtitle" style="color: var(--gold); margin-bottom: 10px;">#TFLoveStory26</h2>
+        <p class="qr-instruction">Share your lovely pictures with us!<br/><span style="font-size: 0.9rem; opacity: 0.8;">Scan the code below to view and upload photos from our celebration.</span></p>
+        <div class="qr-wrapper">
+          <!-- HOW TO CHANGE THE BARCODE: 
+               Replace the "src" link below with your actual QR code image link or local file (e.g., src="my-qr.png") -->
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://photos.google.com" alt="Shared Album QR Code" class="qr-image" />
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+
+
+    // Google Sheets RSVP Logic
+    // TO MAKE THIS WORK:
+    // 1. Go to Google Sheets, Extensions -> Apps Script.
+    // 2. Paste standard doPost(e) code to save parameters to the active sheet.
+    // 3. Deploy as Web App (Anyone can access) and paste the URL below.
+    const GOOGLE_SCRIPT_WEB_APP_URL = "YOUR_GOOGLE_SHEET_WEB_APP_URL_HERE";
+
+    document.getElementById('rsvpForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const btn = this.querySelector('button');
+        btn.innerHTML = '<span class="btn-text">Saving...</span>';
+        
+        const formData = new FormData(this);
+        
+        fetch(GOOGLE_SCRIPT_WEB_APP_URL, {
+            method: 'POST',
+            mode: 'no-cors', // required for simple google sheet posts
+            body: formData
+        }).then(() => {
+            this.style.display = 'none';
+            document.getElementById('rsvpMessage').style.display = 'block';
+        }).catch((error) => {
+            console.log('FAILED...', error);
+            btn.innerHTML = '<span class="btn-text">Error. Try Again</span>';
+        });
+    });
+
+    // Curtain Opening & Audio
+    const bindCurtains = () => {
+      const trigger = document.getElementById('curtainTrigger');
+      const bgMusic = document.getElementById('bgMusic');
+      const audioToggle = document.getElementById('audioToggle');
+      
+      let isPlaying = false;
+
+      if(trigger) {
+        trigger.addEventListener('click', () => {
+          document.body.classList.add('opened');
+          
+          // Start music
+          if(bgMusic) {
+            bgMusic.volume = 0.4; // Soft volume
+            bgMusic.play().then(() => {
+              isPlaying = true;
+            }).catch(e => console.log('Audio autoplay prevented', e));
+          }
+
+          setTimeout(() => {
+            document.body.style.overflowY = 'auto'; // allow scroll after open
+          }, 1500);
+        });
+      }
+
+      // Audio Toggle Logic
+      if(audioToggle && bgMusic) {
+        audioToggle.addEventListener('click', () => {
+          if(isPlaying) {
+            bgMusic.pause();
+            audioToggle.innerHTML = '<i data-lucide="volume-x"></i>';
+          } else {
+            bgMusic.play();
+            audioToggle.innerHTML = '<i data-lucide="volume-2"></i>';
+          }
+          isPlaying = !isPlaying;
+          lucide.createIcons(); // render new icon
+        });
+      }
+    };
+
+    // Scratch Card
+    const initScratchCard = () => {
+      const canvases = document.querySelectorAll('.scratchCanvas');
+      canvases.forEach(canvas => {
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        
+        const drawGoldCoin = () => {
+          canvas.width = canvas.parentElement.offsetWidth;
+          canvas.height = canvas.parentElement.offsetHeight;
+          ctx.globalCompositeOperation = 'source-over';
+          const cx = canvas.width / 2;
+          const cy = canvas.height / 2;
+          const maxR = Math.max(cx, cy) * 1.5;
+
+          const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+          gradient.addColorStop(0, '#FFEAA7');
+          gradient.addColorStop(0.2, '#D4AF37');
+          gradient.addColorStop(0.5, '#FFF2CD');
+          gradient.addColorStop(0.8, '#D4AF37');
+          gradient.addColorStop(1, '#AA7C11');
+          
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0,0, canvas.width, canvas.height);
+          
+          ctx.strokeStyle = 'rgba(170, 124, 17, 0.4)';
+          ctx.lineWidth = 1;
+          for(let i=0; i<maxR; i+=4){
+            ctx.beginPath(); ctx.arc(cx, cy, i, 0, 2*Math.PI); ctx.stroke();
+          }
+        };
+        
+        drawGoldCoin();
+        
+        let isDrawing = false;
+        const getMousePos = (e) => {
+          const rect = canvas.getBoundingClientRect();
+          let clientX = e.clientX, clientY = e.clientY;
+          if(e.touches && e.touches.length > 0) { 
+              clientX = e.touches[0].clientX; clientY = e.touches[0].clientY; 
+          }
+          return { 
+              x: (clientX - rect.left) * (canvas.width / rect.width), 
+              y: (clientY - rect.top) * (canvas.height / rect.height) 
+          };
+        };
+
+        const scratch = (e) => {
+          if(!isDrawing) return;
+          if(e.cancelable) e.preventDefault();
+          const pos = getMousePos(e);
+          ctx.globalCompositeOperation = 'destination-out';
+          ctx.beginPath();
+          ctx.arc(pos.x, pos.y, 25, 0, 2 * Math.PI);
+          ctx.fill();
+        };
+
+        canvas.addEventListener('mousedown', (e) => { isDrawing = true; scratch(e); });
+        canvas.addEventListener('mousemove', scratch);
+        window.addEventListener('mouseup', () => { isDrawing = false; });
+        canvas.addEventListener('mouseleave', () => { isDrawing = false; });
+        canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); }, {passive: false});
+        canvas.addEventListener('touchmove', scratch, {passive: false});
+        window.addEventListener('touchend', () => { isDrawing = false; });
+      });
+    };
+    
+    initScratchCard();
+    bindCurtains();
+    window.addEventListener('resize', initScratchCard);
+
+    // Animations
+    document.addEventListener("DOMContentLoaded", (event) => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Hero Parallax
+      gsap.to('.hero-image', {
+        yPercent: 30,
+        ease: 'none',
+        scrollTrigger: { trigger: '.hero-premium', start: 'top top', end: 'bottom top', scrub: true }
+      });
+
+      // Reveal Elements
+      gsap.utils.toArray('.highlight-image-wrapper, .arch-frame, .details-card-elegant, .finale-image-wrapper, .qr-code-box').forEach((item) => {
+        gsap.fromTo(item, 
+          { opacity: 0, y: 50 }, 
+          { opacity: 1, y: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: item, start: 'top 85%' } }
+        );
+      });
+
+      const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
+    });
+  </script>
+</body>
+</html>
