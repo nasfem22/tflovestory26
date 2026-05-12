@@ -16,10 +16,62 @@
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--wine-dark);
+  background: #1C050A;
   color: var(--gold-light);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+/* Layer 1: The Silk Glow (Stationary Pulsing Light) */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at 50% 50%, 
+    rgba(212, 175, 55, 0.08) 0%, 
+    transparent 70%
+  );
+  animation: diamondPulse 8s ease-in-out infinite alternate;
+  z-index: -1;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+/* Layer 2: Twinkling Stardust (Pure Opacity) */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(1.5px 1.5px at 15% 15%, #D4AF37, transparent),
+    radial-gradient(1px 1px at 40% 60%, #fff, transparent),
+    radial-gradient(2px 2px at 80% 25%, #D4AF37, transparent),
+    radial-gradient(1px 1px at 25% 85%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 60% 75%, #D4AF37, transparent);
+  background-size: 350px 350px;
+  animation: twinkleOnly 5s ease-in-out infinite alternate;
+  opacity: 0.3;
+  z-index: -1;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+@keyframes diamondPulse {
+  0% { opacity: 0.3; transform: scale(1); }
+  100% { opacity: 0.7; transform: scale(1.1); }
+}
+
+@keyframes twinkleOnly {
+  0% { opacity: 0.1; }
+  100% { opacity: 0.4; }
 }
 body:not(.opened) { overflow: hidden; height: 100vh; }
 
@@ -94,7 +146,7 @@ body.opened .audio-toggle-btn { opacity: 1; pointer-events: auto; transition-del
 @keyframes scrollPulse { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
 
 /* Couples Highlight (Right after Hero) */
-.couples-highlight { padding: 100px 20px; background-color: var(--wine-dark); display: flex; justify-content: center; position: relative; z-index: 1; }
+.couples-highlight { padding: 100px 20px; background-color: transparent; display: flex; justify-content: center; position: relative; z-index: 1; }
 .highlight-image-wrapper { width: 100%; max-width: 1400px; border-radius: 8px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.6); position: relative; }
 .highlight-image { width: 100%; height: auto; display: block; filter: none; transition: transform 1.2s ease; }
 .highlight-image-wrapper:hover .highlight-image { transform: scale(1.03); }
@@ -105,7 +157,7 @@ body.opened .audio-toggle-btn { opacity: 1; pointer-events: auto; transition-del
 }
 
 /* Finale & QR Code (Bottom) */
-.finale-section { padding: 100px 20px 150px; background-color: var(--wine); display: flex; flex-direction: column; align-items: center; gap: 100px; }
+.finale-section { padding: 100px 20px 150px; background-color: transparent; display: flex; flex-direction: column; align-items: center; gap: 100px; }
 .finale-image-wrapper { width: 100%; max-width: 1000px; border-radius: 400px 400px 0 0; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.6); border: 1px solid rgba(212, 175, 55, 0.3); }
 .finale-image { width: 100%; height: auto; display: block; filter: none; transition: transform 1.2s ease; }
 .finale-image-wrapper:hover .finale-image { transform: scale(1.03); }
@@ -121,7 +173,7 @@ body.opened .audio-toggle-btn { opacity: 1; pointer-events: auto; transition-del
 }
 
 /* Gallery Archways */
-.gallery-section { padding: 150px 20px; background-color: var(--wine); }
+.gallery-section { padding: 150px 20px; background-color: transparent; }
 .arch-gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; }
 .arch-frame { position: relative; border-radius: 500px 500px 0 0; overflow: hidden; padding-top: 140%; border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
 .arch-frame img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease, filter 0.8s ease; filter: none; }
@@ -129,7 +181,7 @@ body.opened .audio-toggle-btn { opacity: 1; pointer-events: auto; transition-del
 @media (max-width: 768px) { .gallery-section { padding: 80px 15px; } .arch-gallery-grid { grid-template-columns: 1fr; gap: 30px; } }
 
 /* Reveal Section */
-.reveal-section { padding: 150px 20px; background: linear-gradient(135deg, var(--wine-dark), var(--ruby)); position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+.reveal-section { padding: 150px 20px; background: transparent; position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden; }
 .reveal-section::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://www.transparenttextures.com/patterns/stardust.png'); opacity: 0.4; pointer-events: none; }
 .reveal-content-box { text-align: center; max-width: 800px; width: 100%; position: relative; z-index: 2; padding: 60px 20px; background: rgba(28, 5, 10, 0.6); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 20px; backdrop-filter: blur(10px); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
 .reveal-instruction { font-family: var(--font-sans); font-size: 1rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-light); margin-top: 20px; margin-bottom: 60px; font-weight: 400; }
@@ -150,7 +202,7 @@ body.opened .audio-toggle-btn { opacity: 1; pointer-events: auto; transition-del
 }
 
 /* Details */
-.details-section { padding: 150px 20px; background-color: var(--wine-dark); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; max-width: 1100px; margin: 0 auto; text-align: center; }
+.details-section { padding: 150px 20px; background-color: transparent; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; max-width: 1100px; margin: 0 auto; text-align: center; }
 @media (max-width: 768px) { .details-section { padding: 80px 15px; grid-template-columns: 1fr; gap: 20px; } }
 .details-card-elegant { padding: 40px 20px; border-top: 1px solid rgba(212, 175, 55, 0.2); border-bottom: 1px solid rgba(212, 175, 55, 0.2); transition: background 0.4s ease, transform 0.4s ease; display: block; position: relative; }
 .details-card-elegant:hover { background: rgba(212, 175, 55, 0.05); transform: translateY(-5px); }
@@ -168,15 +220,68 @@ body.opened .audio-toggle-btn { opacity: 1; pointer-events: auto; transition-del
 @keyframes tickTock { 0% { transform: rotate(-15deg); } 50% { transform: rotate(15deg); } 100% { transform: rotate(-15deg); } }
 
 /* RSVP */
-.rsvp-premium-section { padding: 150px 20px; background-color: var(--wine); display: flex; justify-content: center; }
-.rsvp-glass-box { background: rgba(28, 5, 10, 0.8); border: 1px solid rgba(212, 175, 55, 0.3); padding: 80px 60px; border-radius: 2px; max-width: 600px; width: 100%; text-align: center; backdrop-filter: blur(20px); box-shadow: 0 30px 80px rgba(0,0,0,0.6); }
-.rsvp-form { display: flex; flex-direction: column; gap: 30px; }
-.input-group input, .input-group select { width: 100%; padding: 20px; background: transparent; border: none; border-bottom: 1px solid rgba(247, 231, 206, 0.3); color: var(--cream); font-family: var(--font-sans); font-size: 1rem; outline: none; transition: border-color 0.3s; border-radius: 0; }
-.input-group input::placeholder { color: rgba(247, 231, 206, 0.5); font-weight: 300; letter-spacing: 0.05em; }
-.input-group select option { background-color: var(--wine-dark); color: var(--cream); }
-.input-group input:focus, .input-group select:focus { border-color: var(--gold); }
-.btn-gold-solid { background-color: var(--gold); border: none; padding: 20px; color: var(--wine-dark); font-family: var(--font-sans); font-size: 1rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; cursor: pointer; transition: background 0.4s ease, transform 0.3s ease; margin-top: 20px; }
-.btn-gold-solid:hover { background-color: var(--cream); transform: translateY(-3px); }
+.rsvp-premium-section { padding: 150px 20px; background-color: transparent; display: flex; justify-content: center; }
+.rsvp-glass-box { background: rgba(46, 6, 15, 0.4); backdrop-filter: blur(20px); border: 1px solid rgba(212, 175, 55, 0.3); padding: 60px 40px; border-radius: 20px; box-shadow: 0 40px 100px rgba(0,0,0,0.5); width: 100%; max-width: 600px; margin: 0 auto; position: relative; z-index: 10; }
+
+/* WOW RSVP Success State */
+.rsvp-successMessage { text-align: center; animation: vipCardPop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.vip-card-success { background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%); border: 2px solid var(--gold); border-radius: 15px; padding: 40px 20px; position: relative; overflow: hidden; box-shadow: 0 0 30px rgba(212, 175, 55, 0.2); }
+.vip-card-success::before { content: 'VIP GUEST'; position: absolute; top: 10px; right: -30px; background: var(--gold); color: var(--wine-dark); font-family: var(--font-sans); font-size: 0.7rem; font-weight: 900; padding: 5px 40px; transform: rotate(45deg); letter-spacing: 0.1em; }
+.gold-glow-text { color: var(--gold-light); text-shadow: 0 0 15px rgba(212, 175, 55, 0.6); font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 15px; }
+.success-subtext { color: var(--cream); opacity: 0.9; font-family: var(--font-sans); line-height: 1.6; font-size: 1.1rem; }
+
+@keyframes vipCardPop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.rsvp-form { display: flex; flex-direction: column; gap: 25px; }
+.input-group input { 
+  width: 100%; 
+  padding: 18px 5px; 
+  background: transparent; 
+  border: none; 
+  border-bottom: 1px solid rgba(212, 175, 55, 0.3); 
+  color: var(--gold-light); 
+  font-family: var(--font-sans); 
+  font-size: 1.1rem; 
+  font-weight: 300;
+  outline: none; 
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+  border-radius: 0; 
+}
+.input-group input:focus { 
+  border-bottom-color: var(--gold); 
+  background: rgba(212, 175, 55, 0.03);
+  padding-left: 10px;
+}
+.input-group input::placeholder { 
+  color: rgba(247, 231, 206, 0.4); 
+  font-weight: 300; 
+  letter-spacing: 0.1em; 
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+.btn-gold-solid { 
+  margin-top: 20px;
+  background: var(--gold); 
+  color: var(--wine-dark); 
+  border: none; 
+  padding: 22px 40px; 
+  font-family: var(--font-sans); 
+  font-weight: 700; 
+  text-transform: uppercase; 
+  letter-spacing: 0.2em; 
+  border-radius: 50px; 
+  cursor: pointer; 
+  transition: all 0.3s ease; 
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.btn-gold-solid:hover { 
+  transform: translateY(-3px); 
+  box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4); 
+  background: var(--gold-light);
+}
 @media (max-width: 768px) { 
   .rsvp-premium-section { padding: 80px 15px; }
   .rsvp-glass-box { padding: 40px 20px; } 
