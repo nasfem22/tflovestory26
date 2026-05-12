@@ -6,15 +6,30 @@
   <title>Timi & Femi | The Royal Owambe</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%232E060F' /%3E%3Ctext x='50' y='67' font-family='serif' font-size='50' font-weight='bold' fill='%23D4AF37' text-anchor='middle'%3ETF%3C/text%3E%3C/svg%3E" />
   
+   <!-- Preloads -->
+  <link rel="preload" href="style.css?v=6" as="style">
+  <link rel="preload" href="hero.webp" as="image" fetchpriority="high">
+  
+  <!-- Critical CSS (Inlined for instant paint) -->
+  <style>
+    :root { --wine-dark: #1C050A; --gold: #D4AF37; --gold-light: #F7E7CE; --font-serif: 'Cormorant Garamond', serif; }
+    body { margin: 0; background: var(--wine-dark); overflow: hidden; height: 100vh; }
+    .curtain-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10000; display: flex; justify-content: center; align-items: center; background: var(--wine-dark); }
+    .curtain-panel { position: absolute; top: 0; width: 50vw; height: 100vh; background: #2E060F; transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1); pointer-events: auto; }
+    .curtain-left { left: 0; } .curtain-right { right: 0; }
+    .curtain-trigger { position: absolute; z-index: 10001; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 220px; height: 220px; border-radius: 50%; border: 2px solid var(--gold); background: rgba(0,0,0,0.3); }
+    .curtain-text { font-family: var(--font-serif); color: var(--gold-light); text-align: center; font-size: 1.1rem; letter-spacing: 0.1em; }
+  </style>
+
   <!-- Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
   
   <!-- GSAP & Lenis -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js" defer></script>
   
    <!-- Icons -->
   <script src="https://unpkg.com/lucide@latest" defer></script>
@@ -25,11 +40,12 @@
    <!-- Confetti Engine -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
 
-  <link rel="stylesheet" href="style.css?v=6" />
+  <link rel="stylesheet" href="style.css?v=6" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="style.css?v=6"></noscript>
 </head>
 <body>
   <!-- Background Audio -->
-  <audio id="bgMusic" loop>
+  <audio id="bgMusic" loop preload="none">
     <source src="wedding.mp3" type="audio/mpeg">
   </audio>
 
@@ -78,7 +94,7 @@
     <!-- Main Highlight Picture -->
     <section class="couples-highlight">
       <div class="highlight-image-wrapper">
-        <img src="highlight.webp" alt="Timi and Femi Highlights" class="highlight-image" loading="lazy" decoding="async" width="1400" height="933" />
+        <img src="highlight.webp" alt="Timi and Femi Highlights" class="highlight-image" decoding="async" width="1400" height="933" />
       </div>
     </section>
 
@@ -114,10 +130,10 @@
       
       <div class="arch-gallery-grid">
         <div class="arch-frame arch-1">
-          <img src="gallery1.webp" alt="Gallery 1" loading="lazy" decoding="async" width="800" height="1200" />
+          <img src="gallery1.webp" alt="Gallery 1" decoding="async" width="800" height="1200" />
         </div>
         <div class="arch-frame arch-2">
-          <img src="gallery2.webp" alt="Gallery 2" loading="lazy" decoding="async" width="800" height="1200" />
+          <img src="gallery2.webp" alt="Gallery 2" decoding="async" width="800" height="1200" />
         </div>
       </div>
     </section>
@@ -191,12 +207,18 @@
   </div>
 
   <script>
-    window.addEventListener('load', () => {
-      if (window.lucide) {
-        lucide.createIcons();
-      }
-      initScratchCard();
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize what we can immediately
       bindCurtains();
+      initScratchCard();
+
+      // Only run icons if Lucide is ready (it's deferred)
+      const checkLucide = setInterval(() => {
+        if (window.lucide) {
+          lucide.createIcons();
+          clearInterval(checkLucide);
+        }
+      }, 100);
     });
 
 
