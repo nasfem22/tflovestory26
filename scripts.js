@@ -7,13 +7,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const curtainText = document.getElementById('curtainText');
     let isPlaying = false;
 
-    // 2. Image Guard (The "Tank")
-    const imagesToLoad = ['hero.webp', 'highlight.webp', 'gallery1.webp', 'gallery2.webp', 'bw.webp'];
+    // 2. The "First Look" Guard (1MB Cap for <2s Wait)
+    // We only wait for the Hero and the Main Highlight. 
+    // This ensures the first 2 sections are perfect instantly.
+    const criticalImages = ['hero.webp', 'highlight.webp'];
     let loadedCount = 0;
+    let isReady = false;
 
     const checkReady = () => {
+        if (isReady) return;
         loadedCount++;
-        if (loadedCount >= imagesToLoad.length) {
+        if (loadedCount >= criticalImages.length) {
+            isReady = true;
             if(curtainTrigger) {
                 curtainTrigger.style.opacity = '1';
                 curtainTrigger.style.pointerEvents = 'auto';
@@ -23,14 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    imagesToLoad.forEach(src => {
+    criticalImages.forEach(src => {
         const img = new Image();
         img.src = src;
         if (img.complete) checkReady();
         else { img.onload = checkReady; img.onerror = checkReady; }
     });
 
-    // 3. Curtain Logic
+    // 3. Curtain Logic (Instant Reveal)
     if(curtainTrigger) {
         curtainTrigger.addEventListener('click', () => {
             document.body.classList.add('opened');
@@ -40,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     bgMusic.play().then(() => { isPlaying = true; }).catch(e => console.log('Audio blocked', e));
                 }, 3000); 
             }
-            setTimeout(() => { document.body.style.overflowY = 'auto'; }, 1500);
+            setTimeout(() => { document.body.style.overflowY = 'auto'; }, 1000);
         });
     }
 
@@ -67,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
         rsvpForm.addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = this.querySelector('button');
-            const originalText = btn.innerHTML;
             btn.innerHTML = 'Sending...';
             btn.disabled = true;
 
@@ -80,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     origin: { y: 0.6 },
                     colors: ['#D4AF37', '#FFF2CD', '#AA7C11']
                 });
-                this.innerHTML = '<div class="success-message" style="color: var(--gold); padding: 20px; font-family: var(--font-serif); text-align:center;"><h3>Thank You!</h3><p>Your RSVP has been received with love.</p></div>';
+                this.innerHTML = '<div class="success-message" style="color: var(--gold); padding: 20px; font-family: var(--font-serif); text-align:center;"><h3>Thank You!</h3><p>Your RSVP has been received.</p></div>';
             }).catch(() => {
                 btn.innerHTML = 'Error. Try Again';
                 btn.disabled = false;
