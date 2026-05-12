@@ -9,7 +9,7 @@
    <!-- Preloads & Preconnects -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="style.css?v=12" as="style">
+  <link rel="preload" href="style.css?v=14" as="style">
   <link rel="preload" href="hero.webp" as="image" fetchpriority="high">
   <link rel="preload" href="highlight.webp" as="image">
   <link rel="preload" href="gallery1.webp" as="image">
@@ -23,9 +23,9 @@
     .curtain-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10000; display: flex; justify-content: center; align-items: center; background: var(--wine-dark); }
     .curtain-panel { position: absolute; top: 0; width: 50vw; height: 100vh; background: linear-gradient(90deg, #4A0411 0%, #2E060F 40%, #1C050A 80%, #4A0411 100%); transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1); pointer-events: auto; }
     .curtain-left { left: 0; } .curtain-right { right: 0; }
-    .curtain-trigger { position: absolute; z-index: 10001; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 220px; height: 220px; border-radius: 50%; border: 2px solid var(--gold); background: rgba(0,0,0,0.3); }
+    .curtain-trigger { position: absolute; z-index: 10001; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 220px; height: 220px; border-radius: 50%; border: 2px solid var(--gold); background: rgba(0,0,0,0.3); transition: opacity 0.4s ease, transform 0.4s ease; }
     .curtain-ring { position: absolute; width: 100%; height: 100%; border: 2px solid rgba(212, 175, 55, 0.5); border-radius: 50%; }
-    .curtain-text { font-family: var(--font-serif); color: var(--gold-light); text-align: center; font-size: 1.1rem; letter-spacing: 0.1em; z-index: 2; }
+    .curtain-text { font-family: var(--font-serif); color: var(--gold-light); text-align: center; font-size: 1.1rem; letter-spacing: 0.1em; z-index: 2; padding: 0 15px; line-height: 1.4; }
     
     /* Critical Hero Styles (Locked for CLS) */
     .hero-premium { position: relative; width: 100%; height: 100vh; overflow: hidden; background: var(--wine-dark); display: flex; align-items: center; justify-content: center; text-align: center; }
@@ -40,8 +40,6 @@
   </style>
 
   <!-- Premium Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
   
   <!-- GSAP & Lenis -->
@@ -58,8 +56,8 @@
    <!-- Confetti Engine -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
 
-  <link rel="stylesheet" href="style.css?v=12" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="style.css?v=12"></noscript>
+  <link rel="stylesheet" href="style.css?v=14" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="style.css?v=14"></noscript>
 </head>
 <body>
   <!-- Background Audio -->
@@ -73,23 +71,20 @@
   </button>
 
   <!-- Velvet Curtain Intro -->
-  <div id="curtainOverlay" class="curtain-overlay">
+  <div class="curtain-overlay" id="curtainOverlay">
     <div class="curtain-panel curtain-left"></div>
     <div class="curtain-panel curtain-right"></div>
-    <div class="curtain-trigger" id="curtainTrigger" style="width: 250px; height: 250px;">
-      <span class="curtain-text" style="font-size: 1rem; line-height: 1.5;">View<br/>#TFLoveStory26</span>
+    <div class="curtain-trigger" id="curtainTrigger" style="opacity: 0.5; pointer-events: none; width: 250px; height: 250px;">
       <div class="curtain-ring"></div>
+      <div class="curtain-text" id="curtainText">Loading Experience...</div>
     </div>
   </div>
-
-
 
   <div class="main-content">
     
     <!-- Hero Section -->
     <section class="hero-premium">
       <div class="hero-image-container loading-shimmer">
-        <!-- Main Hero Image -->
         <img src="hero.webp" alt="Timi and Femi" class="hero-image" id="heroImage" fetchpriority="high" loading="eager" decoding="sync" width="1200" height="800" />
         <div class="hero-overlay-gradient"></div>
       </div>
@@ -215,8 +210,6 @@
         <h2 class="serif-subtitle" style="color: var(--gold); margin-bottom: 10px;">#TFLoveStory26</h2>
         <p class="qr-instruction">Share your lovely pictures with us!<br/><span style="font-size: 0.9rem; opacity: 0.8;">Scan the code below to view and upload photos from our celebration.</span></p>
         <div class="qr-wrapper">
-          <!-- HOW TO CHANGE THE BARCODE: 
-               Replace the "src" link below with your actual QR code image link or local file (e.g., src="my-qr.png") -->
           <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://photos.google.com" alt="Shared Album QR Code" class="qr-image" loading="eager" decoding="sync" width="200" height="200" />
         </div>
       </div>
@@ -224,198 +217,6 @@
 
   </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Initialize what we can immediately
-      bindCurtains();
-      initScratchCard();
-
-      // Only run icons if Lucide is ready (it's deferred)
-      const checkLucide = setInterval(() => {
-        if (window.lucide) {
-          lucide.createIcons();
-          clearInterval(checkLucide);
-        }
-      }, 100);
-    });
-
-
-
-    // Google Sheets RSVP Logic
-    // TO MAKE THIS WORK:
-    // 1. Go to Google Sheets, Extensions -> Apps Script.
-    // 2. Paste standard doPost(e) code to save parameters to the active sheet.
-    // 3. Deploy as Web App (Anyone can access) and paste the URL below.
-    const GOOGLE_SCRIPT_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz1lY8ymC4ggdw2Qdrk49FUlOfKJXDHlW7h4I2xyJLV7OgM0dkcT2FW7FtUAvBRGCT5/exec";
-
-    document.getElementById('rsvpForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const btn = this.querySelector('button');
-        btn.innerHTML = '<span class="btn-text">Saving...</span>';
-        
-        const formData = new FormData(this);
-        const params = new URLSearchParams();
-        for (const pair of formData) {
-            params.append(pair[0], pair[1]);
-        }
-        
-        fetch(GOOGLE_SCRIPT_WEB_APP_URL, {
-            method: 'POST',
-            mode: 'no-cors', // required for simple google sheet posts
-            body: params
-        }).then(() => {
-            // WOW MOMENT: GOLD CONFETTI BLAST
-            confetti({
-              particleCount: 150,
-              spread: 70,
-              origin: { y: 0.6 },
-              colors: ['#D4AF37', '#F7E7CE', '#FFFFFF']
-            });
-
-            this.style.display = 'none';
-            document.getElementById('rsvpMessage').style.display = 'block';
-        }).catch((error) => {
-            console.log('FAILED...', error);
-            btn.innerHTML = '<span class="btn-text">Error. Try Again</span>';
-        });
-    });
-
-    // Curtain Opening & Audio
-    const bindCurtains = () => {
-      const trigger = document.getElementById('curtainTrigger');
-      const bgMusic = document.getElementById('bgMusic');
-      const audioToggle = document.getElementById('audioToggle');
-      
-      let isPlaying = false;
-
-      if(trigger) {
-        trigger.addEventListener('click', () => {
-          document.body.classList.add('opened');
-          
-          // Start music with delay to prioritize images
-          if(bgMusic) {
-            bgMusic.volume = 0.4;
-            setTimeout(() => {
-              bgMusic.play().then(() => {
-                isPlaying = true;
-              }).catch(e => console.log('Audio autoplay prevented', e));
-            }, 3000); 
-          }
-
-          setTimeout(() => {
-            document.body.style.overflowY = 'auto'; // allow scroll after open
-          }, 1500);
-        });
-      }
-
-      // Audio Toggle Logic
-      if(audioToggle && bgMusic) {
-        audioToggle.addEventListener('click', () => {
-          if(isPlaying) {
-            bgMusic.pause();
-            audioToggle.innerHTML = '<i data-lucide="volume-x"></i>';
-          } else {
-            bgMusic.play();
-            audioToggle.innerHTML = '<i data-lucide="volume-2"></i>';
-          }
-          isPlaying = !isPlaying;
-          lucide.createIcons(); // render new icon
-        });
-      }
-    };
-
-    // Scratch Card
-    const initScratchCard = () => {
-      const canvases = document.querySelectorAll('.scratchCanvas');
-      canvases.forEach(canvas => {
-        const ctx = canvas.getContext('2d', { willReadFrequently: true });
-        
-        const drawGoldCoin = () => {
-          canvas.width = canvas.parentElement.offsetWidth;
-          canvas.height = canvas.parentElement.offsetHeight;
-          ctx.globalCompositeOperation = 'source-over';
-          const cx = canvas.width / 2;
-          const cy = canvas.height / 2;
-          const maxR = Math.max(cx, cy) * 1.5;
-
-          const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-          gradient.addColorStop(0, '#FFEAA7');
-          gradient.addColorStop(0.2, '#D4AF37');
-          gradient.addColorStop(0.5, '#FFF2CD');
-          gradient.addColorStop(0.8, '#D4AF37');
-          gradient.addColorStop(1, '#AA7C11');
-          
-          ctx.fillStyle = gradient;
-          ctx.fillRect(0,0, canvas.width, canvas.height);
-          
-          ctx.strokeStyle = 'rgba(170, 124, 17, 0.4)';
-          ctx.lineWidth = 1;
-          for(let i=0; i<maxR; i+=4){
-            ctx.beginPath(); ctx.arc(cx, cy, i, 0, 2*Math.PI); ctx.stroke();
-          }
-        };
-        
-        drawGoldCoin();
-        
-        let isDrawing = false;
-        const getMousePos = (e) => {
-          const rect = canvas.getBoundingClientRect();
-          let clientX = e.clientX, clientY = e.clientY;
-          if(e.touches && e.touches.length > 0) { 
-              clientX = e.touches[0].clientX; clientY = e.touches[0].clientY; 
-          }
-          return { 
-              x: (clientX - rect.left) * (canvas.width / rect.width), 
-              y: (clientY - rect.top) * (canvas.height / rect.height) 
-          };
-        };
-
-        const scratch = (e) => {
-          if(!isDrawing) return;
-          if(e.cancelable) e.preventDefault();
-          const pos = getMousePos(e);
-          ctx.globalCompositeOperation = 'destination-out';
-          ctx.beginPath();
-          ctx.arc(pos.x, pos.y, 25, 0, 2 * Math.PI);
-          ctx.fill();
-        };
-
-        canvas.addEventListener('mousedown', (e) => { isDrawing = true; scratch(e); });
-        canvas.addEventListener('mousemove', scratch);
-        window.addEventListener('mouseup', () => { isDrawing = false; });
-        canvas.addEventListener('mouseleave', () => { isDrawing = false; });
-        canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); }, {passive: false});
-        canvas.addEventListener('touchmove', scratch, {passive: false});
-        window.addEventListener('touchend', () => { isDrawing = false; });
-      });
-    };
-    
-    window.addEventListener('resize', initScratchCard);
-
-    // Animations
-    document.addEventListener("DOMContentLoaded", (event) => {
-      gsap.registerPlugin(ScrollTrigger);
-
-      // Hero Parallax
-      gsap.to('.hero-image', {
-        yPercent: 30,
-        ease: 'none',
-        scrollTrigger: { trigger: '.hero-premium', start: 'top top', end: 'bottom top', scrub: true }
-      });
-
-      // Reveal Elements
-      gsap.utils.toArray('.highlight-image-wrapper, .arch-frame, .details-card-elegant, .finale-image-wrapper, .qr-code-box').forEach((item) => {
-        gsap.fromTo(item, 
-          { opacity: 0, y: 50 }, 
-          { opacity: 1, y: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: item, start: 'top 85%' } }
-        );
-      });
-
-      const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
-      lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add((time) => { lenis.raf(time * 1000); });
-      gsap.ticker.lagSmoothing(0);
-    });
-  </script>
+  <script src="scripts.js?v=14"></script>
 </body>
 </html>

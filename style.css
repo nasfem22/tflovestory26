@@ -99,7 +99,29 @@ html.lenis { height: auto; }
 .curtain-right { right: 0; transform-origin: right; }
 .curtain-trigger { position: absolute; z-index: 10001; display: flex; justify-content: center; align-items: center; width: 220px; height: 220px; cursor: pointer; pointer-events: auto; transition: opacity 0.4s ease, transform 0.4s ease; }
 .curtain-ring { position: absolute; width: 100%; height: 100%; border: 2px solid rgba(212, 175, 55, 0.5); border-radius: 50%; box-shadow: 0 0 20px rgba(212, 175, 55, 0.2), inset 0 0 20px rgba(212, 175, 55, 0.2); animation: ringPulse 3s infinite; }
-.curtain-text { font-family: var(--font-serif); color: var(--gold-light); font-size: 1.1rem; line-height: 1.8; text-transform: uppercase; letter-spacing: 0.15em; text-align: center; text-shadow: 0 2px 10px rgba(0,0,0,0.8); z-index: 2; }
+.curtain-trigger.ready-glow {
+    animation: goldPulsePremium 2s infinite;
+    opacity: 1 !important;
+}
+
+@keyframes goldPulsePremium {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+    70% { transform: scale(1.05); box-shadow: 0 0 30px 10px rgba(212, 175, 55, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+}
+
+.curtain-text { 
+    font-family: var(--font-serif); 
+    color: var(--gold-light); 
+    font-size: 1.1rem; 
+    line-height: 1.4; 
+    text-transform: uppercase; 
+    letter-spacing: 0.15em; 
+    text-align: center; 
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8); 
+    z-index: 2;
+    padding: 0 15px;
+}
 .curtain-trigger:hover { transform: scale(1.05); }
 .curtain-trigger:hover .curtain-ring { border-color: var(--gold); box-shadow: 0 0 30px rgba(212, 175, 55, 0.5), inset 0 0 30px rgba(212, 175, 55, 0.5); }
 @keyframes ringPulse { 0% { transform: scale(0.9); opacity: 0.5; } 50% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(0.9); opacity: 0.5; } }
