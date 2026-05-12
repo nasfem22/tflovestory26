@@ -16,14 +16,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
   
-  <!-- Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+   <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest" defer></script>
   
-  <!-- EmailJS -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+   <!-- EmailJS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
 
-  <!-- Confetti Engine -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+   <!-- Confetti Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
 
   <link rel="stylesheet" href="style.css?v=6" />
 </head>
@@ -56,7 +56,7 @@
     <section class="hero-premium">
       <div class="hero-image-container">
         <!-- Main Hero Image -->
-        <img src="hero.webp" alt="Timi and Femi" class="hero-image" />
+        <img src="hero.webp" alt="Timi and Femi" class="hero-image" fetchpriority="high" loading="eager" width="1200" height="800" />
         <div class="hero-overlay-gradient"></div>
       </div>
       
@@ -78,7 +78,7 @@
     <!-- Main Highlight Picture -->
     <section class="couples-highlight">
       <div class="highlight-image-wrapper">
-        <img src="highlight.jpg" alt="Timi and Femi Highlights" class="highlight-image" />
+        <img src="highlight.webp" alt="Timi and Femi Highlights" class="highlight-image" loading="lazy" decoding="async" width="1400" height="933" />
       </div>
     </section>
 
@@ -114,10 +114,10 @@
       
       <div class="arch-gallery-grid">
         <div class="arch-frame arch-1">
-          <img src="gallery1.webp" alt="Gallery 1" />
+          <img src="gallery1.webp" alt="Gallery 1" loading="lazy" decoding="async" width="800" height="1200" />
         </div>
         <div class="arch-frame arch-2">
-          <img src="gallery2.webp" alt="Gallery 2" />
+          <img src="gallery2.webp" alt="Gallery 2" loading="lazy" decoding="async" width="800" height="1200" />
         </div>
       </div>
     </section>
@@ -174,7 +174,7 @@
     <!-- Final Photo & QR Code Section -->
     <section class="finale-section">
       <div class="finale-image-wrapper">
-        <img src="bw.jpg" alt="Couple Finale" class="finale-image" />
+        <img src="bw.webp" alt="Couple Finale" class="finale-image" loading="lazy" decoding="async" width="1000" height="1500" />
       </div>
       
       <div class="qr-code-box">
@@ -183,7 +183,7 @@
         <div class="qr-wrapper">
           <!-- HOW TO CHANGE THE BARCODE: 
                Replace the "src" link below with your actual QR code image link or local file (e.g., src="my-qr.png") -->
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://photos.google.com" alt="Shared Album QR Code" class="qr-image" />
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://photos.google.com" alt="Shared Album QR Code" class="qr-image" loading="lazy" decoding="async" width="200" height="200" />
         </div>
       </div>
     </section>
@@ -191,7 +191,13 @@
   </div>
 
   <script>
-    lucide.createIcons();
+    window.addEventListener('load', () => {
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+      initScratchCard();
+      bindCurtains();
+    });
 
 
 
@@ -342,8 +348,6 @@
       });
     };
     
-    initScratchCard();
-    bindCurtains();
     window.addEventListener('resize', initScratchCard);
 
     // Animations
