@@ -286,3 +286,14 @@ body.opened .audio-toggle-btn { opacity: 1; pointer-events: auto; transition-del
   .rsvp-premium-section { padding: 80px 15px; }
   .rsvp-glass-box { padding: 40px 20px; } 
 }
+/* Loading Shimmer Effect */
+.loading-shimmer {
+  background: linear-gradient(90deg, #1C050A 25%, #2E060F 50%, #1C050A 75%);
+  background-size: 200% 100%;
+  animation: shimmerMove 2s infinite linear;
+}
+
+@keyframes shimmerMove {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

@@ -7,8 +7,12 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%232E060F' /%3E%3Ctext x='50' y='67' font-family='serif' font-size='50' font-weight='bold' fill='%23D4AF37' text-anchor='middle'%3ETF%3C/text%3E%3C/svg%3E" />
   
    <!-- Preloads -->
-  <link rel="preload" href="style.css?v=6" as="style">
+  <link rel="preload" href="style.css?v=7" as="style">
   <link rel="preload" href="hero.webp" as="image" fetchpriority="high">
+  <link rel="preload" href="highlight.webp" as="image">
+  <link rel="preload" href="gallery1.webp" as="image">
+  <link rel="preload" href="gallery2.webp" as="image">
+  <link rel="preload" href="bw.webp" as="image">
   
   <!-- Critical CSS (Inlined for instant paint) -->
   <style>
@@ -40,8 +44,8 @@
    <!-- Confetti Engine -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
 
-  <link rel="stylesheet" href="style.css?v=6" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="style.css?v=6"></noscript>
+  <link rel="stylesheet" href="style.css?v=7" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="style.css?v=7"></noscript>
 </head>
 <body>
   <!-- Background Audio -->
@@ -72,7 +76,7 @@
     <section class="hero-premium">
       <div class="hero-image-container">
         <!-- Main Hero Image -->
-        <img src="hero.webp" alt="Timi and Femi" class="hero-image" fetchpriority="high" loading="eager" width="1200" height="800" />
+        <img src="hero.webp" alt="Timi and Femi" class="hero-image" fetchpriority="high" loading="eager" decoding="sync" width="1200" height="800" />
         <div class="hero-overlay-gradient"></div>
       </div>
       
@@ -94,7 +98,7 @@
     <!-- Main Highlight Picture -->
     <section class="couples-highlight">
       <div class="highlight-image-wrapper">
-        <img src="highlight.webp" alt="Timi and Femi Highlights" class="highlight-image" decoding="async" width="1400" height="933" />
+        <img src="highlight.webp" alt="Timi and Femi Highlights" class="highlight-image" loading="eager" decoding="sync" width="1400" height="933" />
       </div>
     </section>
 
@@ -130,10 +134,10 @@
       
       <div class="arch-gallery-grid">
         <div class="arch-frame arch-1">
-          <img src="gallery1.webp" alt="Gallery 1" decoding="async" width="800" height="1200" />
+          <img src="gallery1.webp" alt="Gallery 1" loading="eager" decoding="sync" width="800" height="1200" />
         </div>
         <div class="arch-frame arch-2">
-          <img src="gallery2.webp" alt="Gallery 2" decoding="async" width="800" height="1200" />
+          <img src="gallery2.webp" alt="Gallery 2" loading="eager" decoding="sync" width="800" height="1200" />
         </div>
       </div>
     </section>
@@ -190,7 +194,7 @@
     <!-- Final Photo & QR Code Section -->
     <section class="finale-section">
       <div class="finale-image-wrapper">
-        <img src="bw.webp" alt="Couple Finale" class="finale-image" loading="lazy" decoding="async" width="1000" height="1500" />
+        <img src="bw.webp" alt="Couple Finale" class="finale-image" loading="eager" decoding="sync" width="1000" height="1500" />
       </div>
       
       <div class="qr-code-box">
@@ -199,7 +203,7 @@
         <div class="qr-wrapper">
           <!-- HOW TO CHANGE THE BARCODE: 
                Replace the "src" link below with your actual QR code image link or local file (e.g., src="my-qr.png") -->
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://photos.google.com" alt="Shared Album QR Code" class="qr-image" loading="lazy" decoding="async" width="200" height="200" />
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://photos.google.com" alt="Shared Album QR Code" class="qr-image" loading="eager" decoding="sync" width="200" height="200" />
         </div>
       </div>
     </section>
@@ -274,12 +278,14 @@
         trigger.addEventListener('click', () => {
           document.body.classList.add('opened');
           
-          // Start music
+          // Start music with delay to prioritize images
           if(bgMusic) {
-            bgMusic.volume = 0.4; // Soft volume
-            bgMusic.play().then(() => {
-              isPlaying = true;
-            }).catch(e => console.log('Audio autoplay prevented', e));
+            bgMusic.volume = 0.4;
+            setTimeout(() => {
+              bgMusic.play().then(() => {
+                isPlaying = true;
+              }).catch(e => console.log('Audio autoplay prevented', e));
+            }, 3000); 
           }
 
           setTimeout(() => {
