@@ -9,7 +9,7 @@
    <!-- Preloads & Preconnects -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="style.css?v=9" as="style">
+  <link rel="preload" href="style.css?v=12" as="style">
   <link rel="preload" href="hero.webp" as="image" fetchpriority="high">
   <link rel="preload" href="highlight.webp" as="image">
   <link rel="preload" href="gallery1.webp" as="image">
@@ -28,9 +28,15 @@
     .curtain-text { font-family: var(--font-serif); color: var(--gold-light); text-align: center; font-size: 1.1rem; letter-spacing: 0.1em; z-index: 2; }
     
     /* Critical Hero Styles (Locked for CLS) */
-    .hero-premium { position: relative; width: 100%; height: 100vh; overflow: hidden; background: var(--wine-dark); }
+    .hero-premium { position: relative; width: 100%; height: 100vh; overflow: hidden; background: var(--wine-dark); display: flex; align-items: center; justify-content: center; text-align: center; }
     .hero-image-container { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; }
     .hero-image { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-overlay-gradient { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; background: linear-gradient(to bottom, rgba(28, 5, 10, 0.3) 0%, rgba(28, 5, 10, 0.9) 100%); }
+    .hero-text-content { position: relative; z-index: 3; padding: 0 20px; color: var(--gold-light); }
+    .hero-pre-title { font-family: var(--font-serif); font-size: 1.2rem; letter-spacing: 0.4em; text-transform: uppercase; margin-bottom: 20px; color: var(--gold-light); }
+    .names-wrapper { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 30px; }
+    .hero-name { font-family: var(--font-serif); font-size: clamp(3rem, 10vw, 6rem); color: var(--gold); margin: 0; font-weight: 400; text-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+    .hero-ampersand { font-family: var(--font-serif); font-size: clamp(2rem, 6vw, 4rem); color: var(--gold-light); opacity: 0.8; font-style: italic; }
   </style>
 
   <!-- Premium Fonts -->
@@ -52,8 +58,8 @@
    <!-- Confetti Engine -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
 
-  <link rel="stylesheet" href="style.css?v=9" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="style.css?v=9"></noscript>
+  <link rel="stylesheet" href="style.css?v=12" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="style.css?v=12"></noscript>
 </head>
 <body>
   <!-- Background Audio -->
@@ -88,7 +94,7 @@
         <div class="hero-overlay-gradient"></div>
       </div>
       
-      <div class="hero-text-content" id="heroText" style="transition: opacity 1.5s ease;">
+      <div class="hero-text-content" id="heroText">
         <h3 class="hero-pre-title">You are invited to the union of</h3>
         <div class="names-wrapper">
           <h1 class="hero-name">Timi</h1>
@@ -223,17 +229,6 @@
       // Initialize what we can immediately
       bindCurtains();
       initScratchCard();
-
-      // Fade in hero text only after image loads
-      const heroImg = document.getElementById('heroImage');
-      const heroText = document.getElementById('heroText');
-      if (heroImg.complete) {
-        heroText.style.opacity = '1';
-      } else {
-        heroImg.addEventListener('load', () => {
-          heroText.style.opacity = '1';
-        });
-      }
 
       // Only run icons if Lucide is ready (it's deferred)
       const checkLucide = setInterval(() => {
