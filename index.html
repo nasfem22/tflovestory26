@@ -10,28 +10,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   
-  <!-- Nuclear Preloads (No Lazy Loading) -->
-  <link rel="preload" href="style.css?v=21" as="style">
+  <!-- Nuclear Preloads -->
+  <link rel="preload" href="style.css?v=24" as="style">
   <link rel="preload" href="hero.webp" as="image" fetchpriority="high">
-  <link rel="preload" href="highlight.webp" as="image" fetchpriority="high">
-  <link rel="preload" href="gallery1.webp" as="image" fetchpriority="high">
-  <link rel="preload" href="gallery2.webp" as="image" fetchpriority="high">
-  <link rel="preload" href="bw.webp" as="image" fetchpriority="high">
   
-  <!-- Critical CSS (Locked for Instant Impact) -->
+  <!-- Critical CSS -->
   <style>
     :root { --wine-dark: #1C050A; --gold: #D4AF37; --gold-light: #F7E7CE; --font-serif: 'Cormorant Garamond', serif; }
     body { margin: 0; background: var(--wine-dark); overflow: hidden; height: 100vh; }
-    
     .curtain-overlay { position: fixed; inset: 0; z-index: 10000; display: flex; justify-content: center; align-items: center; background: var(--wine-dark); }
     .curtain-panel { position: absolute; top: 0; width: 50vw; height: 100vh; background: linear-gradient(90deg, #4A0411 0%, #2E060F 40%, #1C050A 80%, #4A0411 100%); transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1); }
     .curtain-left { left: 0; } .curtain-right { right: 0; }
     .curtain-trigger { position: absolute; z-index: 10001; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 220px; height: 220px; border-radius: 50%; border: 2px solid var(--gold); background: rgba(0,0,0,0.3); opacity: 0.5; pointer-events: none; }
     .curtain-text { font-family: var(--font-serif); color: var(--gold-light); text-align: center; font-size: 1.1rem; letter-spacing: 0.1em; z-index: 2; padding: 0 15px; }
-    
-    /* NO FADE-IN: INSTANT VISIBILITY */
     .main-content { opacity: 1 !important; visibility: visible !important; }
-    
     .hero-premium { position: relative; width: 100%; height: 100vh; overflow: hidden; background: var(--wine-dark); display: flex; align-items: center; justify-content: center; }
     .hero-image-container { position: absolute; inset: 0; z-index: 1; }
     .hero-image { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -47,8 +39,8 @@
   <script src="https://unpkg.com/lucide@latest" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
 
-  <link rel="stylesheet" href="style.css?v=21" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="style.css?v=21"></noscript>
+  <link rel="stylesheet" href="style.css?v=24" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="style.css?v=24"></noscript>
 </head>
 <body>
   <audio id="bgMusic" loop preload="none"><source src="wedding.mp3" type="audio/mpeg"></audio>
@@ -131,19 +123,25 @@
       </div>
     </section>
 
+    <!-- CONFIRMATION SECTION - CLOSED -->
     <section class="rsvp-premium-section">
       <div class="rsvp-glass-box">
-        <h2 class="script-title">RSVP</h2>
-        <h3 class="serif-subtitle" style="margin-bottom: 40px;">Claim Your VIP Pass</h3>
-        <form id="rsvpForm" class="rsvp-form">
-          <div class="input-group"><input type="text" name="name" required placeholder="Guest Full Name" /></div>
-          <div class="input-group"><input type="tel" name="phone" required placeholder="Phone Number" maxlength="11" /></div>
-          <div class="input-group"><input type="text" name="location" required placeholder="City / Country" /></div>
-          <button type="submit" class="btn-gold-solid"><span class="btn-text">I Wouldn't Miss It!</span></button>
-        </form>
-        <div id="rsvpMessage" style="display: none;"><div class="vip-card-success"><h3 class="gold-glow-text">It's Official!</h3><p>Your VIP seat is reserved!</p></div></div>
+        <div class="registry-icon-wrapper">
+          <i data-lucide="lock" class="registry-top-icon"></i>
+        </div>
+        <h2 class="script-title">Confirmation</h2>
+        <h3 class="serif-subtitle" style="margin-bottom: 30px;">GUEST LIST CLOSED</h3>
+        <p style="font-family: var(--font-sans); font-size: 0.95rem; color: var(--gold-light); line-height: 1.8; font-weight: 300; letter-spacing: 0.05em; opacity: 0.85;">
+          Our guest list is now finalised.<br>
+          We look forward to celebrating with you on <strong style="color: var(--gold);">17 · 07 · 26</strong>.
+        </p>
+        <div style="margin-top: 35px; width: 60px; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); margin-left: auto; margin-right: auto;"></div>
+        <p style="margin-top: 25px; font-family: var(--font-serif); font-size: 1.1rem; color: var(--gold); font-style: italic; letter-spacing: 0.1em;">
+          #TFLoveStory26
+        </p>
       </div>
     </section>
+
 
     <section class="finale-section">
       <div class="finale-image-wrapper">
@@ -159,6 +157,6 @@
     </section>
   </div>
 
-  <script src="scripts.js?v=21"></script>
+  <script src="scripts.js?v=24"></script>
 </body>
 </html>
