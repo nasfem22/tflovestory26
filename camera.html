@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>#TFLOVESTORY26 | Camera Capsule</title>
+  <!-- Link to the main website stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts used in the main website -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Ambient Wedding Background (re-use classes from main site) -->
+  <div class="wedding-bg-overlay"></div>
+  <div class="wedding-gold-glow"></div>
+  <main id="app-container">
+    <!-- 1. Passcode Screen (Security Gateway) -->
+    <section id="screen-passcode" class="app-screen active">
+      <div class="passcode-card">
+        <div class="card-border"></div>
+        <div class="card-content">
+          <div class="wedding-monogram">TF</div>
+          <h1 class="wedding-title">#TFLOVESTORY26</h1>
+          <p class="wedding-subtitle">Please enter the passcode to access the camera.</p>
+          
+          <form id="passcode-form">
+            <div class="input-group">
+              <input type="password" id="passcode-input" placeholder="Enter Passcode" required autocomplete="off">
+              <span class="gold-line"></span>
+            </div>
+            <button type="submit" class="btn-gold" id="btn-verify">
+              <span>Enter Camera</span>
+            </button>
+          </form>
+          <div id="passcode-error" class="error-msg"></div>
+        </div>
+      </div>
+    </section>
+    <!-- 2. Camera Screen -->
+    <section id="screen-camera" class="app-screen">
+      <header class="camera-header">
+        <span class="wedding-hashtag">#TFLOVESTORY26</span>
+      </header>
+      <!-- Viewfinder -->
+      <div class="camera-viewport-container">
+        <video id="camera-feed" autoplay playsinline muted></video>
+        
+        <!-- Live preview watermark side column (vertical hashtag) -->
+        <div id="live-side-column" class="live-side-column">
+          <div class="live-side-text-container">
+            <span class="live-side-text">#TFLOVESTORY26</span>
+          </div>
+          <div class="live-side-ornament">✦</div>
+        </div>
+        <!-- Fallback File Input (If camera permissions are blocked/unsupported) -->
+        <div id="camera-fallback" class="camera-fallback hidden">
+          <div class="fallback-icon">📸</div>
+          <p>Camera feed disabled or not supported in this browser.</p>
+          <label for="fallback-file-input" class="btn-gold">
+            <span>Choose / Take Photo</span>
+          </label>
+          <input type="file" id="fallback-file-input" accept="image/*" capture="environment">
+        </div>
+      </div>
+      <!-- Controls -->
+      <div class="camera-controls">
+        <button id="btn-switch-camera" class="btn-control-secondary" aria-label="Switch Camera">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1L5 16l4-4H6z"/>
+          </svg>
+        </button>
+        <div class="shutter-outer">
+          <button id="btn-shutter" class="btn-shutter" aria-label="Take Photo"></button>
+        </div>
+        <button id="btn-info" class="btn-control-secondary" aria-label="Wedding Info">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+          </svg>
+        </button>
+      </div>
+      <canvas id="capture-canvas" style="display: none;"></canvas>
+    </section>
+    <!-- 3. Uploading Screen -->
+    <section id="screen-uploading" class="app-screen">
+      <div class="upload-loader-container">
+        <div class="gold-ring-loader">
+          <div class="inner-pulse"></div>
+        </div>
+        <h2 class="upload-title">Securing Your Memory</h2>
+        <p class="upload-subtitle">Sending your photo straight to the couple's Drive...</p>
+        <div class="progress-bar-container">
+          <div id="upload-progress-bar" class="progress-bar-fill"></div>
+        </div>
+      </div>
+    </section>
+    <!-- 4. Success Confirmation Screen -->
+    <section id="screen-success" class="app-screen">
+      <div class="success-card">
+        <div class="card-border"></div>
+        <div class="card-content">
+          <div class="success-icon">
+            <svg viewBox="0 0 24 24" width="60" height="60" fill="currentColor">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+          </div>
+          <h2 class="wedding-title">Captured!</h2>
+          <p class="success-msg">Your photo has been successfully saved to the wedding drive.</p>
+          <p class="wedding-subtitle">Thank you for sharing this special moment with us!</p>
+          
+          <button id="btn-take-another" class="btn-gold">
+            <span>Take Another Photo</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="camera.js"></script>
+</body>
+</html>

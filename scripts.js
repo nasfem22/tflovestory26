@@ -8,22 +8,16 @@ document.addEventListener('DOMContentLoaded', () => {
     let isPlaying = false;
     let wasPlayingBeforeHidden = false;
 
-    // 2. Smart Audio Control (Pause on Tab Switch)
+    // 2. Smart Audio Control
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
-            if (isPlaying) {
-                bgMusic.pause();
-                wasPlayingBeforeHidden = true;
-            }
+            if (isPlaying) { bgMusic.pause(); wasPlayingBeforeHidden = true; }
         } else {
-            if (wasPlayingBeforeHidden) {
-                bgMusic.play();
-                wasPlayingBeforeHidden = false;
-            }
+            if (wasPlayingBeforeHidden) { bgMusic.play(); wasPlayingBeforeHidden = false; }
         }
     });
 
-    // 3. The "First Look" Guard (1MB Cap for <2s Wait)
+    // 3. The "First Look" Guard
     const criticalImages = ['hero.webp', 'highlight.webp'];
     let loadedCount = 0;
     let isReady = false;
@@ -49,21 +43,19 @@ document.addEventListener('DOMContentLoaded', () => {
         else { img.onload = checkReady; img.onerror = checkReady; }
     });
 
-    // 4. Curtain Logic (Instant Reveal & Audio)
+    // 4. Curtain Logic
     if(curtainTrigger) {
         curtainTrigger.addEventListener('click', () => {
             document.body.classList.add('opened');
             if(bgMusic) {
                 bgMusic.volume = 0.5;
-                bgMusic.play().then(() => { 
-                    isPlaying = true; 
-                }).catch(e => console.log('Audio blocked', e));
+                bgMusic.play().then(() => { isPlaying = true; }).catch(e => console.log('Audio blocked', e));
             }
             setTimeout(() => { document.body.style.overflowY = 'auto'; }, 1000);
         });
     }
 
-    // 5. Audio Toggle Button
+    // 5. Audio Toggle
     if(audioToggle && bgMusic) {
         audioToggle.addEventListener('click', () => {
             if(isPlaying) {
@@ -78,27 +70,44 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 6. RSVP Logic
+    // 6. GUEST VERIFICATION LOGIC (Royal Registry)
     const rsvpForm = document.getElementById('rsvpForm');
+    const rsvpMessage = document.getElementById('rsvpMessage');
     const GOOGLE_SCRIPT_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz1lY8ymC4ggdw2Qdrk49FUlOfKJXDHlW7h4I2xyJLV7OgM0dkcT2FW7FtUAvBRGCT5/exec";
 
     if(rsvpForm) {
         rsvpForm.addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = this.querySelector('button');
-            btn.innerHTML = 'Sending...';
+            const guestName = this.querySelector('input[name="name"]').value.trim();
+            
+            btn.innerHTML = 'Verifying Registry...';
             btn.disabled = true;
 
-            const params = new URLSearchParams(new FormData(this));
-            fetch(GOOGLE_SCRIPT_WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: params })
-            .then(() => {
-                confetti({
-                    particleCount: 150,
-                    spread: 70,
-                    origin: { y: 0.6 },
-                    colors: ['#D4AF37', '#FFF2CD', '#AA7C11']
-                });
-                this.innerHTML = '<div class="success-message" style="color: var(--gold); padding: 20px; font-family: var(--font-serif); text-align:center;"><h3>Thank You!</h3><p>Your RSVP has been received.</p></div>';
+            // We use GET for the lookup
+            fetch(`${GOOGLE_SCRIPT_WEB_APP_URL}?action=check&name=${encodeURIComponent(guestName)}`)
+            .then(res => res.json())
+            .then(data => {
+                if(data.found) {
+                    confetti({
+                        particleCount: 150,
+                        spread: 70,
+                        origin: { y: 0.6 },
+                        colors: ['#D4AF37', '#FFF2CD', '#AA7C11']
+                    });
+                    this.style.display = 'none';
+                    rsvpMessage.style.display = 'block';
+                    rsvpMessage.innerHTML = `
+                        <div class="vip-card-success">
+                            <h3 class="gold-glow-text">You're on the list!</h3>
+                            <p class="success-subtext">Welcome, <strong>${data.name}</strong>. We can't wait to celebrate with you!</p>
+                        </div>
+                    `;
+                } else {
+                    btn.innerHTML = 'Name Not Found. Try Again?';
+                    btn.disabled = false;
+                    alert("We couldn't find your name on the Registry. Please double-check your spelling or contact the couple.");
+                }
             }).catch(() => {
                 btn.innerHTML = 'Error. Try Again';
                 btn.disabled = false;
@@ -137,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('touchend', () => isDrawing = false);
     });
 
-    // 8. Animations & Smooth Scroll
+    // 8. Animations
     if(window.gsap) {
         gsap.registerPlugin(ScrollTrigger);
         gsap.utils.toArray('.highlight-image-wrapper, .arch-frame, .details-card-elegant, .finale-image-wrapper, .qr-code-box').forEach((item) => {
@@ -152,8 +161,17 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.ticker.lagSmoothing(0);
     }
 
-    // 9. Lucide Icons
+    // 9. Lucide
     const checkLucide = setInterval(() => {
         if (window.lucide) { lucide.createIcons(); clearInterval(checkLucide); }
     }, 100);
+
+    // 10. Dynamic QR Code for Camera
+    const qrImage = document.querySelector('.qr-image');
+    if (qrImage) {
+        const baseUrl = window.location.href.split('?')[0].split('#')[0];
+        // Replace index.html with camera.html or append /camera.html
+        const cameraUrl = baseUrl.endsWith('index.html') ? baseUrl.replace('index.html', 'camera.html') : (baseUrl.endsWith('/') ? baseUrl + 'camera.html' : baseUrl + '/camera.html');
+        qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(cameraUrl)}`;
+    }
 });

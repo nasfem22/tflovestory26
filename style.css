@@ -281,9 +281,17 @@ body.opened .audio-toggle-btn { opacity: 1; pointer-events: auto; transition-del
 .animate-tick-tock { animation: tickTock 2s ease-in-out infinite; transform-origin: top center; display: inline-block; }
 @keyframes tickTock { 0% { transform: rotate(-15deg); } 50% { transform: rotate(15deg); } 100% { transform: rotate(-15deg); } }
 
-/* RSVP */
+/* ELITE REGISTRY STYLING */
+.registry-icon-wrapper { margin-bottom: 20px; display: flex; justify-content: center; }
+.registry-top-icon { color: var(--gold); width: 35px; height: 35px; opacity: 0.8; animation: iconPulse 3s infinite; }
+.search-box-glow input:focus { 
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1); 
+    border-bottom-color: var(--gold) !important;
+}
+.elite-search-form { max-width: 450px; margin: 0 auto; }
+
 .rsvp-premium-section { padding: 150px 20px; background-color: transparent; display: flex; justify-content: center; }
-.rsvp-glass-box { background: rgba(46, 6, 15, 0.4); backdrop-filter: blur(20px); border: 1px solid rgba(212, 175, 55, 0.3); padding: 60px 40px; border-radius: 20px; box-shadow: 0 40px 100px rgba(0,0,0,0.5); width: 100%; max-width: 600px; margin: 0 auto; position: relative; z-index: 10; }
+.rsvp-glass-box { background: rgba(46, 6, 15, 0.4); backdrop-filter: blur(20px); border: 1px solid rgba(212, 175, 55, 0.3); padding: 60px 40px; border-radius: 20px; box-shadow: 0 40px 100px rgba(0,0,0,0.5); width: 100%; max-width: 600px; margin: 0 auto; position: relative; z-index: 10; text-align: center; }
 
 /* WOW RSVP Success State */
 .rsvp-successMessage { text-align: center; animation: vipCardPop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
@@ -359,3 +367,319 @@ body.opened .audio-toggle-btn { opacity: 1; pointer-events: auto; transition-del
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
+
+/* ==========================================================================
+   #TFLOVESTORY26 - CAMERA ADDITIONS
+   ========================================================================== */
+/* Design Variables */
+:root {
+  --color-burgundy-deep: #3B0011;
+  --color-burgundy-medium: #5B0E2D;
+  --color-gold-medium: #B38728;
+  --color-gold-light: #FCF6BA;
+  --grad-gold: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+  --grad-burgundy: radial-gradient(circle at center, #7E183F 0%, #5B0E2D 50%, #20000A 100%);
+}
+#app-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.app-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.app-screen.active {
+  display: flex;
+  opacity: 1;
+  transform: scale(1);
+}
+/* Card Styling */
+.passcode-card, .success-card {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  background: rgba(91, 14, 45, 0.4);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+.card-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 20px;
+  border: 1.5px solid transparent;
+  background: var(--grad-gold) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.card-content {
+  padding: 40px 30px;
+}
+.wedding-monogram {
+  font-family: 'Playfair Display', serif;
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--color-gold-light);
+  border: 1.5px solid var(--color-gold-medium);
+  width: 65px;
+  height: 65px;
+  line-height: 62px;
+  border-radius: 50%;
+  margin: 0 auto 20px auto;
+  background: rgba(0,0,0,0.2);
+}
+.wedding-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  background: var(--grad-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+.wedding-subtitle {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+  margin-bottom: 25px;
+}
+/* Inputs & Forms */
+.input-group {
+  position: relative;
+  margin-bottom: 25px;
+}
+#passcode-input {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: 4px;
+  outline: none;
+}
+.input-group .gold-line {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--grad-gold);
+  transition: width 0.3s, left 0.3s;
+}
+#passcode-input:focus ~ .gold-line {
+  width: 100%;
+  left: 0;
+}
+.btn-gold {
+  width: 100%;
+  padding: 14px;
+  background: var(--grad-gold);
+  border: none;
+  border-radius: 30px;
+  color: var(--color-burgundy-deep);
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(170, 119, 28, 0.4);
+}
+.error-msg {
+  color: #FF5A5F;
+  font-size: 12px;
+  margin-top: 10px;
+}
+/* Camera Shell layout */
+#screen-camera {
+  padding: 0;
+  justify-content: space-between;
+}
+.camera-header {
+  width: 100%;
+  padding: 15px 20px;
+  text-align: center;
+  background: rgba(32, 0, 10, 0.6);
+}
+.camera-header .wedding-hashtag {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  background: var(--grad-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.camera-viewport-container {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  height: 60vh;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(191,149,63,0.25);
+  background: black;
+}
+#camera-feed {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* Vertical Sidebar hashtag overlay preview */
+.live-side-column {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 12%;
+  background: var(--color-burgundy-deep);
+  border-left: 1.5px solid var(--color-gold-medium);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  z-index: 10;
+  pointer-events: none;
+}
+.live-side-text-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.live-side-text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: 'Playfair Display', serif;
+  color: var(--color-gold-light);
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.live-side-ornament {
+  color: var(--color-gold-medium);
+  font-size: 14px;
+}
+.camera-fallback {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: var(--color-burgundy-deep);
+  text-align: center;
+}
+.camera-fallback.hidden { display: none !important; }
+/* Capture controls */
+.camera-controls {
+  width: 100%;
+  max-width: 480px;
+  padding: 20px 20px 40px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.btn-control-secondary {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(191,149,63,0.25);
+  background: rgba(91,14,45,0.4);
+  color: var(--color-gold-light);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.shutter-outer {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid var(--color-gold-medium);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+}
+.btn-shutter {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: none;
+  background: var(--grad-gold);
+  cursor: pointer;
+}
+/* Loader Styles */
+.gold-ring-loader {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid rgba(191,149,63,0.1);
+  border-top: 3px solid var(--color-gold-medium);
+  border-bottom: 3px solid var(--color-gold-medium);
+  margin: 0 auto 25px auto;
+  animation: spin 1.5s linear infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.inner-pulse {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: var(--grad-gold);
+  opacity: 0.6;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+.progress-bar-container {
+  width: 250px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 20px auto;
+}
+.progress-bar-fill {
+  width: 0%;
+  height: 100%;
+  background: var(--grad-gold);
+  transition: width 0.15s ease;
+}
+.success-icon {
+  color: var(--color-gold-medium);
+  margin-bottom: 20px;
+  animation: heartbeat 1.2s ease-in-out infinite alternate;
+}
+/* Animations */
+@keyframes spin { 100% { transform: rotate(360deg); } }
+@keyframes pulse { 0%, 100% { transform: scale(0.6); opacity: 0.4; } 50% { transform: scale(0.9); opacity: 0.8; } }
+@keyframes heartbeat { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
