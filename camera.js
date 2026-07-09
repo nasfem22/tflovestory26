@@ -59,12 +59,16 @@ document.addEventListener('DOMContentLoaded', () => {
   async function initCameraStream() {
     showScreen('camera');
     try {
+      await startCamera(currentFacingMode);
+      // Enumerate AFTER stream starts — browser now has permission to see all cameras
       const devices = await navigator.mediaDevices.enumerateDevices();
       videoDevices = devices.filter(d => d.kind === 'videoinput');
+      // Only hide switch button if there is truly only 1 camera
       if (videoDevices.length <= 1) {
         btnSwitchCamera.style.display = 'none';
+      } else {
+        btnSwitchCamera.style.display = 'flex';
       }
-      await startCamera(currentFacingMode);
     } catch (e) {
       showFallbackUI();
     }
